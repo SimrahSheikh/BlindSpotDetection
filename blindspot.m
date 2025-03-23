@@ -141,3 +141,23 @@ xlabel('X-axis (m)'); ylabel('Y-axis (m)');
 title('Sensor Fusion: LiDAR, Radar, and Kalman Filter Output');
 grid on;
 hold off;
+
+% Define column headers
+headers = {'True_X', 'True_Y', 'LiDAR_X', 'LiDAR_Y', 'Radar_X', 'Radar_Y', ...
+           'Fused_X', 'Fused_Y', 'Vehicle_Velocity', 'Object_Velocity', 'Object_Angle'};
+
+% Create a matrix with sensor data
+outputData = [truePosition(1), truePosition(2), ...
+              lidarMeasurement(1), lidarMeasurement(2), ...
+              radarMeasurement(1), radarMeasurement(2), ...
+              updatedState(1), updatedState(2), ...
+              vehicleVelocity, velocity, angle];
+
+% Convert data to table format
+dataTable = array2table(outputData, 'VariableNames', headers);
+
+% Save table as CSV file
+writetable(dataTable, 'sensor_fusion_output.csv');
+
+fprintf('Sensor fusion results saved to "sensor_fusion_output.csv"\n');
+
